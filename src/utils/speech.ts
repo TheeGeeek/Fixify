@@ -1,25 +1,46 @@
-export async function readAloudWithElevenLabs(text: string) {
-  const apiKey = "YOUR_ELEVENLABS_API_KEY"; // Replace this
-  const voiceId = "YOUR_VOICE_ID"; // Replace with your selected voice
+// src/utils/speech.ts
+export async function readAloudWithWebSpeech(text: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    // Check if speech synthesis is supported
+    if (!('speechSynthesis' in window)) {
+      reject(new Error('Speech synthesis not supported in this browser'));
+      return;
+    }
 
-  const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "xi-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      text: text,
-      model_id: "eleven_monolingual_v1",
-      voice_settings: {
-        stability: 0.75,
-        similarity_boost: 0.85,
-      },
-    }),
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    // Create a new speech synthesis utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Configure speech settings
+    utterance.rate = 0.9; // Slightly slower for better comprehension
+    utterance.pitch = 1.0; // Normal pitch
+    utterance.volume = 0.8; // Slightly quieter
+
+    // Try to use a pleasant voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(voice => 
+      voice.name.includes('Google') || 
+      voice.name.includes('Microsoft') ||
+      voice.lang.startsWith('en')
+    );
+    
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+
+    // Set up event handlers
+    utterance.onend = () => resolve();
+    utterance.onerror = (event) => reject(new Error(`Speech synthesis error: ${event.error}`));
+
+    // Start speaking
+    window.speechSynthesis.speak(utterance);
   });
+}
 
-  const audioBlob = await response.blob();
-  const audioUrl = URL.createObjectURL(audioBlob);
-  const audio = new Audio(audioUrl);
-  audio.play();
+export function stopSpeech(): void {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
 }

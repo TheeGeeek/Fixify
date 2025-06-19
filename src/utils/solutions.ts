@@ -36,13 +36,13 @@ const solutions: Record<string, TechSolution> = {
       { 
         emoji: "📶", 
         action: "Check if other devices (like your phone or tablet) can connect to the same WiFi network to see if the problem is with your specific device.",
-        uiPath: "Phone: **Settings → WiFi** | Computer: **System Tray → WiFi Icon**",
+        uiPath: "Phone: Settings → WiFi | Computer: System Tray → WiFi Icon",
         visualCue: "Look for your network name in the available networks list"
       },
       { 
         emoji: "🔧", 
         action: "On your device, go to WiFi settings, find your network name, select 'Forget' or 'Remove', then reconnect by entering your WiFi password again.",
-        uiPath: "Windows: **Settings → Network & Internet → WiFi → Manage known networks** | Mac: **System Preferences → Network → WiFi → Advanced** | iPhone: **Settings → WiFi → (i) next to network → Forget** | Android: **Settings → WiFi → Saved networks**",
+        uiPath: "Windows: Settings → Network & Internet → WiFi → Manage known networks | Mac: System Preferences → Network → WiFi → Advanced | iPhone: Settings → WiFi → (i) next to network → Forget | Android: Settings → WiFi → Saved networks",
         visualCue: "Look for a gear icon or 'i' symbol next to your network name"
       },
       { 
@@ -79,26 +79,26 @@ const solutions: Record<string, TechSolution> = {
       { 
         emoji: "🚀", 
         action: "Restart your computer to clear temporary files and refresh your computer's memory.",
-        uiPath: "Windows: **Start Menu → Power → Restart** | Mac: **Apple Menu → Restart**",
+        uiPath: "Windows: Start Menu → Power → Restart | Mac: Apple Menu → Restart",
         visualCue: "Look for the power icon in the Start menu or Apple logo in the top-left corner"
       },
       { 
         emoji: "📱", 
         action: "Close unnecessary programs running in the background.",
-        uiPath: "Windows: **Ctrl + Shift + Esc → Processes tab** | Mac: **Cmd + Space → Activity Monitor**",
+        uiPath: "Windows: Ctrl + Shift + Esc → Processes tab | Mac: Cmd + Space → Activity Monitor",
         visualCue: "Look for programs using high CPU or Memory percentages - right-click to end task",
         officialLink: "https://support.microsoft.com/en-us/windows/task-manager-1a4b8d3e-7a7b-4b7a-8b7a-1a4b8d3e7a7b"
       },
       { 
         emoji: "💾", 
         action: "Free up storage space using built-in cleanup tools.",
-        uiPath: "Windows: **Start Menu → type 'Disk Cleanup' → Select C: drive** | Mac: **Apple Menu → About This Mac → Storage → Manage**",
+        uiPath: "Windows: Start Menu → type 'Disk Cleanup' → Select C: drive | Mac: Apple Menu → About This Mac → Storage → Manage",
         visualCue: "Look for checkboxes next to file types you can safely delete (Temporary files, Recycle Bin, etc.)"
       },
       { 
         emoji: "⬆️", 
         action: "Install available system updates.",
-        uiPath: "Windows: **Settings → Update & Security → Windows Update** | Mac: **System Preferences → Software Update**",
+        uiPath: "Windows: Settings → Update & Security → Windows Update | Mac: System Preferences → Software Update",
         visualCue: "Look for a blue 'Check for updates' button or notification badges"
       }
     ],
@@ -125,26 +125,26 @@ const solutions: Record<string, TechSolution> = {
       { 
         emoji: "🔄", 
         action: "Force restart your phone to clear temporary glitches.",
-        uiPath: "iPhone: **Hold Side + Volume Down for 10 seconds** | Android: **Hold Power button for 10-15 seconds**",
+        uiPath: "iPhone: Hold Side + Volume Down for 10 seconds | Android: Hold Power button for 10-15 seconds",
         visualCue: "Keep holding until you see the Apple logo (iPhone) or the phone completely turns off and restarts"
       },
       { 
         emoji: "📱", 
         action: "Close all background apps that might be using too much memory.",
-        uiPath: "iPhone: **Swipe up from bottom → Swipe up on each app** | Android: **Recent Apps button → Swipe away apps**",
+        uiPath: "iPhone: Swipe up from bottom → Swipe up on each app | Android: Recent Apps button → Swipe away apps",
         visualCue: "Look for the app switcher view showing all open apps as cards you can swipe away"
       },
       { 
         emoji: "💾", 
         action: "Free up storage space by removing unnecessary files and apps.",
-        uiPath: "iPhone: **Settings → General → iPhone Storage** | Android: **Settings → Storage → Free up space**",
+        uiPath: "iPhone: Settings → General → iPhone Storage | Android: Settings → Storage → Free up space",
         visualCue: "Look for a storage bar showing how much space is used - aim for at least 1GB free space",
         officialLink: "https://support.apple.com/en-us/HT211686"
       },
       { 
         emoji: "⬆️", 
         action: "Install the latest software updates for bug fixes and performance improvements.",
-        uiPath: "iPhone: **Settings → General → Software Update** | Android: **Settings → System → System Update**",
+        uiPath: "iPhone: Settings → General → Software Update | Android: Settings → System → System Update",
         visualCue: "Look for a red notification badge on Settings or a 'Download and Install' button"
       }
     ],
@@ -181,13 +181,13 @@ const solutions: Record<string, TechSolution> = {
       { 
         emoji: "🎨", 
         action: "Verify your display resolution and refresh rate settings.",
-        uiPath: "Windows: **Right-click Desktop → Display Settings → Advanced Display** | Mac: **System Preferences → Displays → Display tab**",
+        uiPath: "Windows: Right-click Desktop → Display Settings → Advanced Display | Mac: System Preferences → Displays → Display tab",
         visualCue: "Look for 'Recommended' next to the resolution setting - this is usually the best choice"
       },
       { 
         emoji: "🔄", 
         action: "Update your graphics drivers to the latest version.",
-        uiPath: "Windows: **Right-click Start → Device Manager → Display Adapters → Right-click graphics card → Update driver**",
+        uiPath: "Windows: Right-click Start → Device Manager → Display Adapters → Right-click graphics card → Update driver",
         visualCue: "Look for your graphics card name (NVIDIA, AMD, Intel) and right-click for the context menu"
       },
       { 
@@ -219,19 +219,19 @@ const solutions: Record<string, TechSolution> = {
       { 
         emoji: "🔊", 
         action: "Check your system volume and mute settings.",
-        uiPath: "Windows: **Click speaker icon in system tray** | Mac: **Click volume icon in menu bar**",
+        uiPath: "Windows: Click speaker icon in system tray | Mac: Click volume icon in menu bar",
         visualCue: "Look for a speaker icon with an X (muted) or low volume slider - adjust accordingly"
       },
       { 
         emoji: "🎵", 
         action: "Verify the correct audio output device is selected.",
-        uiPath: "Windows: **Right-click speaker icon → Open Sound Settings → Choose output device** | Mac: **System Preferences → Sound → Output tab**",
+        uiPath: "Windows: Right-click speaker icon → Open Sound Settings → Choose output device | Mac: System Preferences → Sound → Output tab",
         visualCue: "Look for your speakers or headphones in the device list - they should have a green checkmark or be highlighted"
       },
       { 
         emoji: "🔄", 
         action: "Restart the Windows Audio service or restart your computer.",
-        uiPath: "Windows: **Win + R → type 'services.msc' → Find 'Windows Audio' → Right-click → Restart**",
+        uiPath: "Windows: Win + R → type 'services.msc' → Find 'Windows Audio' → Right-click → Restart",
         visualCue: "Look for 'Windows Audio' in the alphabetical list - it should show 'Running' in the Status column"
       },
       { 
@@ -263,19 +263,19 @@ const solutions: Record<string, TechSolution> = {
       { 
         emoji: "🔄", 
         action: "Run the program with administrator privileges.",
-        uiPath: "Windows: **Right-click program icon → Run as administrator** | Mac: **Applications folder → Right-click app → Get Info → check 'Run as administrator'**",
+        uiPath: "Windows: Right-click program icon → Run as administrator | Mac: Applications folder → Right-click app → Get Info → check 'Run as administrator'",
         visualCue: "Look for a shield icon next to 'Run as administrator' in the context menu"
       },
       { 
         emoji: "⬆️", 
         action: "Check for and install program updates.",
-        uiPath: "**Program Menu → Help → Check for Updates** or visit the software company's website",
+        uiPath: "Program Menu → Help → Check for Updates or visit the software company's website",
         visualCue: "Look for 'Help', 'About', or gear icon menus within the program"
       },
       { 
         emoji: "🔧", 
         action: "Repair or reinstall the program.",
-        uiPath: "Windows: **Settings → Apps → Find program → Advanced Options → Repair** | Mac: **Drag app to Trash → Reinstall from App Store or website**",
+        uiPath: "Windows: Settings → Apps → Find program → Advanced Options → Repair | Mac: Drag app to Trash → Reinstall from App Store or website",
         visualCue: "Look for 'Modify', 'Repair', or 'Uninstall' options when you click on the program"
       },
       { 
@@ -361,7 +361,7 @@ export function generateSolution(problem: string, conversationHistory: Conversat
         { 
           emoji: "⬆️", 
           action: "Check for updates by going to your device's Settings and looking for 'System Update' or 'Software Update'.",
-          uiPath: "**Settings → System → Update** (varies by device)",
+          uiPath: "Settings → System → Update (varies by device)",
           visualCue: "Look for notification badges or 'Update Available' messages"
         },
         { 
@@ -390,18 +390,18 @@ export function generateSolution(problem: string, conversationHistory: Conversat
   let formattedSolution = contextualPrefix + matchedSolution.diagnosis + "\n\n";
   
   matchedSolution.steps.forEach((step, index) => {
-    formattedSolution += `${step.emoji} **Step ${index + 1}:** ${step.action}\n`;
+    formattedSolution += `${step.emoji} Step ${index + 1}: ${step.action}\n`;
     
     if (step.uiPath) {
-      formattedSolution += `   📍 **Navigation:** ${step.uiPath}\n`;
+      formattedSolution += `   📍 Navigation: ${step.uiPath}\n`;
     }
     
     if (step.visualCue) {
-      formattedSolution += `   👀 **What to look for:** ${step.visualCue}\n`;
+      formattedSolution += `   👀 What to look for: ${step.visualCue}\n`;
     }
     
     if (step.officialLink) {
-      formattedSolution += `   🔗 **Official Guide:** ${step.officialLink}\n`;
+      formattedSolution += `   🔗 Official Guide: ${step.officialLink}\n`;
     }
     
     formattedSolution += "\n";
@@ -411,14 +411,14 @@ export function generateSolution(problem: string, conversationHistory: Conversat
   
   // Add official resources if available
   if (matchedSolution.officialResources && matchedSolution.officialResources.length > 0) {
-    formattedSolution += "\n\n📚 **Official Resources:**\n";
+    formattedSolution += "\n\n📚 Official Resources:\n";
     matchedSolution.officialResources.forEach(resource => {
-      formattedSolution += `• **${resource.platform}:** [${resource.title}](${resource.url})\n`;
+      formattedSolution += `• ${resource.platform}: [${resource.title}](${resource.url})\n`;
     });
   }
   
   if (matchedSolution.complexIssueGuidance) {
-    const guidancePrefix = matchedSolution.tone === 'serious' ? "\n\n⚠️ **Important:** " : "\n\n💡 **Additional Help:** ";
+    const guidancePrefix = matchedSolution.tone === 'serious' ? "\n\n⚠️ Important: " : "\n\n💡 Additional Help: ";
     formattedSolution += `${guidancePrefix}${matchedSolution.complexIssueGuidance}`;
   }
   

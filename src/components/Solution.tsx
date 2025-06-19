@@ -1,6 +1,6 @@
-import React from 'react';
-import { CheckCircle, AlertCircle, HelpCircle, Lightbulb, Volume2, MapPin, ExternalLink, Navigation } from 'lucide-react';
-import { readAloudWithElevenLabs } from '../utils/speech';
+import React, { useState, useEffect } from 'react';
+import { Lightbulb, Navigation, ExternalLink, Volume2, MapPin, HelpCircle, VolumeX } from 'lucide-react';
+import { readAloudWithWebSpeech, stopSpeech } from '../utils/speech';
 
 interface ConversationEntry {
   problem: string;
@@ -18,6 +18,13 @@ interface SolutionProps {
 export default function Solution({ problem, solution, userLocation, conversationHistory }: SolutionProps) {
   const [isSpeaking, setIsSpeaking] = React.useState(false);
 
+  // Cleanup speech when component unmounts
+  useEffect(() => {
+    return () => {
+      stopSpeech();
+    };
+  }, []);
+
   const formatSolution = (text: string) => {
     const lines = text.split('\n');
     const formatted = [];
@@ -27,7 +34,7 @@ export default function Solution({ problem, solution, userLocation, conversation
       const line = lines[i].trim();
 
       // Check for step headers
-      const stepMatch = line.match(/^([📱🔧⚠️💾🔄🔊🎵🖥️🎧🧹📍📶🚀⬆️🔍💡🔌🎨]+)\s*\*\*Step\s+(\d+):\*\*\s*(.+)/);
+      const stepMatch = line.match(/^([📱🔧⚠️💾🔄🔊🎵🖥️🎧🧹📍📶🚀⬆️🔍💡🔌🎨]+)\s*Step\s+(\d+):\s*(.+)/);
       if (stepMatch) {
         if (currentStep) {
           formatted.push(currentStep);
@@ -43,25 +50,25 @@ export default function Solution({ problem, solution, userLocation, conversation
         };
       }
       // Check for navigation paths
-      else if (line.includes('📍 **Navigation:**')) {
+      else if (line.includes('📍 Navigation:')) {
         if (currentStep) {
-          currentStep.navigation = line.replace('📍 **Navigation:**', '').trim();
+          currentStep.navigation = line.replace('📍 Navigation:', '').trim();
         }
       }
       // Check for visual cues
-      else if (line.includes('👀 **What to look for:**')) {
+      else if (line.includes('👀 What to look for:')) {
         if (currentStep) {
-          currentStep.visualCue = line.replace('👀 **What to look for:**', '').trim();
+          currentStep.visualCue = line.replace('👀 What to look for:', '').trim();
         }
       }
       // Check for official links
-      else if (line.includes('🔗 **Official Guide:**')) {
+      else if (line.includes('🔗 Official Guide:')) {
         if (currentStep) {
-          currentStep.officialLink = line.replace('🔗 **Official Guide:**', '').trim();
+          currentStep.officialLink = line.replace('🔗 Official Guide:', '').trim();
         }
       }
       // Check for regular text content
-      else if (line && !line.includes('📚 **Official Resources:**') && !stepMatch) {
+      else if (line && !line.includes('📚 Official Resources:') && !stepMatch) {
         if (currentStep) {
           formatted.push(currentStep);
           currentStep = null;
@@ -81,14 +88,14 @@ export default function Solution({ problem, solution, userLocation, conversation
   };
 
   const extractOfficialResources = (text: string) => {
-    const resourcesMatch = text.match(/📚 \*\*Official Resources:\*\*([\s\S]*?)(?=\n\n|$)/);
+    const resourcesMatch = text.match(/📚 Official Resources:([\s\S]*?)(?=\n\n|$)/);
     if (!resourcesMatch) return [];
 
     const resourcesText = resourcesMatch[1];
     const resourceLines = resourcesText.split('\n').filter(line => line.trim().startsWith('•'));
     
     return resourceLines.map(line => {
-      const match = line.match(/• \*\*(.+?):\*\* \[(.+?)\]\((.+?)\)/);
+      const match = line.match(/• (.+?): \[(.+?)\]\((.+?)\)/);
       if (match) {
         return {
           platform: match[1],
@@ -105,11 +112,32 @@ export default function Solution({ problem, solution, userLocation, conversation
   const isHardwareIssue = solution.includes('hardware') || solution.includes('professional') || solution.includes('repair center');
 
   const handleVoiceRead = async () => {
+    if (isSpeaking) {
+      // Stop current speech
+      stopSpeech();
+      setIsSpeaking(false);
+      return;
+    }
+
     try {
-      const cleanedText = solution.replace(/[📱🔧⚠️💾🔄🔊🎵🖥️🎧🧹📍📶🚀⬆️🔍💡🔌🎨👀📍🔗📚]/g, '').replace(/\*\*/g, '');
-      await readAloudWithElevenLabs(cleanedText);
+      setIsSpeaking(true);
+      // Clean the text for better speech synthesis
+      const cleanedText = solution
+        .replace(/[📱🔧⚠️💾🔄🔊🎵🖥️🎧🧹📍📶🚀⬆️🔍💡🔌🎨👀📍🔗📚•]/g, '')
+        .replace(/\*\*/g, '')
+        .replace(/Step \d+:/g, 'Step')
+        .replace(/Navigation:/g, 'To navigate:')
+        .replace(/What to look for:/g, 'Look for:')
+        .replace(/Official Guide:/g, 'For more help, check the official guide.')
+        .replace(/Official Resources:/g, 'Additional resources are available.')
+        .trim();
+      
+      await readAloudWithWebSpeech(cleanedText);
     } catch (err) {
       console.error("Failed to read aloud:", err);
+      alert("Sorry, text-to-speech is not available in your browser or an error occurred.");
+    } finally {
+      setIsSpeaking(false);
     }
   };
 
@@ -249,19 +277,29 @@ export default function Solution({ problem, solution, userLocation, conversation
       <div className="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Volume2 className="w-5 h-5 text-blue-600" />
+            {isSpeaking ? (
+              <VolumeX className="w-5 h-5 text-blue-600" />
+            ) : (
+              <Volume2 className="w-5 h-5 text-blue-600" />
+            )}
             <span className="font-medium text-blue-900">Voice Assistant</span>
           </div>
           <button
             onClick={handleVoiceRead}
-            disabled={isSpeaking}
-            className={`bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg transition-all duration-200 ${isSpeaking ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`${
+              isSpeaking 
+                ? 'bg-red-500 hover:bg-red-600' 
+                : 'bg-blue-500 hover:bg-blue-600'
+            } text-white text-sm font-medium py-2 px-4 rounded-lg transition-all duration-200`}
           >
-            {isSpeaking ? 'Reading...' : 'Read Aloud'}
+            {isSpeaking ? 'Stop Reading' : 'Read Aloud'}
           </button>
         </div>
         <p className="text-blue-800 text-sm mt-2">
-          Click "Read Aloud" to have these instructions spoken to you step by step.
+          {isSpeaking 
+            ? 'Click "Stop Reading" to pause the voice assistant.'
+            : 'Click "Read Aloud" to have these instructions spoken to you step by step using your browser\'s built-in voice.'
+          }
         </p>
       </div>
 
